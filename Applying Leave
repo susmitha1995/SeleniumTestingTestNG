@@ -1,0 +1,92 @@
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+
+import org.Base.CodeBase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class DashBoardPage extends CodeBase {
+	
+	public void clickLeaveApply() {
+		driver.findElement(By.xpath("//a[text()='Apply']")).click();
+	
+	}
+	public void enterLeavedetails() throws AWTException, InterruptedException, IOException {
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
+		
+		driver.findElement(By.xpath("//div[text()='-- Select --']")).click();
+		
+		driver.findElement(By.xpath("//span[text()='CAN - Bereavement']")).click();
+		driver.findElement(By.xpath("//input[@placeholder='yyyy-mm-dd']")).click();
+		WebElement from_date=driver.findElement(By.xpath("//div[text()='18']"));
+		from_date.click();
+		WebElement clicktodatebar = driver.findElement(By.xpath("//i[@class='oxd-icon bi-calendar oxd-date-input-icon']"
+				+ "//following::i[@class='oxd-icon bi-calendar oxd-date-input-icon']"));
+		
+		clickOn(driver,clicktodatebar,30);
+	    Wait<WebDriver> wait = new FluentWait(driver)
+				.withTimeout(Duration.ofSeconds(30))
+				.pollingEvery(Duration.ofSeconds(3)).ignoring(NoSuchElementException.class);
+		
+		WebElement to_date=wait.until(new Function<WebDriver,WebElement>(){
+			public WebElement apply(WebDriver driver) {
+				return driver.findElement(By.xpath("//div[text()='26']"));
+			}
+	
+		});
+		
+		
+		to_date.click();
+        
+		driver.findElement(By.xpath("//textarea")).sendKeys("Marriage Leave");
+		
+		try {
+		driver.findElement(By.xpath("//button[@type='submit']")).click();}
+		catch(Exception e)
+		{
+			System.out.println("Submit not clicked");
+		}
+	
+	}
+	
+	private void clickOn(RemoteWebDriver driver, WebElement date, int i) throws IOException {
+		// TODO Auto-generated method stub
+		new WebDriverWait(driver,i).
+		until(ExpectedConditions.elementToBeClickable(date));
+		try {
+		date.click();}
+		catch(Exception e) {
+			TakesScreenshot screenshot = (TakesScreenshot)driver;
+			File sorcefile = screenshot.getScreenshotAs(OutputType.FILE);
+			File destinationfile= new File("C:\\Users\\subar\\Downloads\\phot.png");
+			FileHandler.copy(sorcefile, destinationfile);
+		}
+	
+	}
+	
+	
+	public void clickMyLeave() {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.findElement(By.xpath("//header[@class='oxd-topbar']//following::li[3]")).click();
+		
+	}
+	
+
+}

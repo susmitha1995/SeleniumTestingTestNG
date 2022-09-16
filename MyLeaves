@@ -1,0 +1,39 @@
+import java.util.ArrayList;
+import java.util.List;
+
+import org.Base.CodeBase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+public class MyLeaves extends CodeBase {
+	
+	public void displayLeaves() {
+		
+		//driver.findElement(By.xpath("//div[@class='oxd-table-cell-actions']//following::button"));
+		
+	 List<WebElement> tds =driver.findElements(By.xpath("//div[@class='oxd-table-row oxd-table-row--with-border' ]//following::div[@role='row']"));
+	 
+	//System.out.println(tds.size());
+	 boolean b=false;
+	 List<String> lt = new ArrayList();
+	 for(WebElement td:tds)
+	 {
+		 
+		 if(td.getText().contains("Pending Approval"))
+		{
+			b=true;
+			lt.add(td.getText());
+			break;
+		}
+		
+	 }
+	 
+	 if(b==true)
+	 for(String l:lt)
+	 {
+		 System.out.println(l);
+	 }
+		
+	}
+
+}

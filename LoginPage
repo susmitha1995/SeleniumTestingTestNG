@@ -1,0 +1,67 @@
+import java.util.concurrent.TimeUnit;
+
+import org.Base.CodeBase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+public class LoginPage extends CodeBase{
+
+	
+	/**
+	 * @description
+	 * @param Username - pass the username
+	 * @return 
+	 * @return 
+	 */
+	
+	
+	
+	
+	
+	public  void fillUserName(String username) {
+		
+		driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys(username);
+		
+		
+	}
+	
+	public  void fillPassword(String password) {
+		
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
+		
+		
+	}
+	
+	public void clickLoginButton() {
+		driver.findElement(By.xpath("//button")).click();
+		
+	}
+	
+	public void leaveClick() {
+		driver.findElement(By.xpath("//a[contains(@href,'/web/index.php/leave')]")).click();
+		
+	}
+	
+	
+	
+	
+	/**
+	 * 
+	 * @param this function used to login
+	 * @param username
+	 * @param password
+	 */
+	
+	public void login(String username,String password)
+	{
+		fillUserName(username);
+		fillPassword(password);
+		clickLoginButton();
+		
+	}
+
+	
+
+}

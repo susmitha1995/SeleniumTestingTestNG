@@ -1,0 +1,61 @@
+import org.testng.annotations.Test;
+import java.awt.AWTException;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import org.Base.CodeBase;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+@Test
+public class HRMLSTests extends CodeBase {
+	 WebDriver driver ;
+	
+	 @BeforeTest
+	 public void launchDriver() {
+		
+		 startApp();
+		 LoginPage lp=	 new LoginPage();
+	     lp.login("Admin", "admin123");
+	 }
+	@Test(testName="LeaveApply")
+	public void leaveApply() throws AWTException, InterruptedException, IOException {
+		
+		LoginPage lp=	 new LoginPage();
+		lp.leaveClick();
+		
+		DashBoardPage db = new DashBoardPage();
+		db.clickLeaveApply();
+		db.enterLeavedetails();
+		
+		
+	}
+	@Test(testName="myLeave")
+	public void myLeave() {
+		
+		DashBoardPage dp = new DashBoardPage();
+		dp.clickMyLeave();
+		MyLeaves ml = new MyLeaves();
+		ml.displayLeaves();
+	}
+	
+	
+	
+	
+	/*@AfterTest
+	public void endDriver() {
+		closeApp(); 
+	}*/
+
+}
